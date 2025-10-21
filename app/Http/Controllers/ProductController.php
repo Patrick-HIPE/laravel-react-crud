@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -20,13 +22,8 @@ class ProductController extends Controller
         return Inertia::render('products/Create', []); // go to create page
     }
 
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'category'    => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000'],
-            'price'       => ['required', 'numeric', 'min:0']
-        ]);
+    public function store(StoreProductRequest $request) {
+        $validated = $request->validated();
         $createProduct = Product::create($validated);
         return redirect()->route('products.index')->with('message', 'Product created successfully.');
     }
@@ -36,13 +33,8 @@ class ProductController extends Controller
         return Inertia::render('products/Edit', [ 'product' => $product ]); // go to edit page with product data
     }
 
-    public function update(Request $request, Product $product) {
-        $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'category'    => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000'],
-            'price'       => ['required', 'numeric', 'min:0']
-        ]);
+    public function update(UpdateProductRequest $request, Product $product) {
+        $validated = $request->validated();
         $product->update($validated);
         return redirect()->route('products.index')->with('message', 'Product updated successfully.');
     }
