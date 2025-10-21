@@ -64,7 +64,7 @@ export default function Index({products}: Props) {
               <TableHead>Category</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Description</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead className='left-aligned'>Actions</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -79,7 +79,7 @@ export default function Index({products}: Props) {
                     ₱{product.price.toLocaleString()}
                   </TableCell>
                   <TableCell>{product.description}</TableCell>
-                  <TableCell className='text-center space-x-2'>
+                  <TableCell className='left-aligned space-x-2'>
                     <Link href={route('products.edit', product.id)}>
                       <Button className='bg-slate-500 hover:bg-slate-700 cursor-pointer'>
                         Edit
